@@ -1,0 +1,42 @@
+<div class="card mb-5">
+    <div class="card-header">
+        <h4 class="text-primary">Fetch Data using RESTfull API</h4>  <hr>
+        <div  style="display: flex; justify-content: space-between">
+            <div>
+                <p> Status : 
+                    <strong [ngClass]="{
+                        'text-success' : status == 'Data Fetched',
+                        'text-danger' : status == 'Problem Fetching Data'}" >{{status}} 
+                        <div *ngIf="fetching" class="spinner-grow spinner-grow-sm text-danger" role="status">
+                            <span class="sr-only">{{status}}</span>
+                        </div>
+                    </strong>
+                </p>
+            </div> 
+            <button class="btn btn-primary" type="button" (click)="onFetchData()">
+                <span *ngIf="fetching" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                {{ fetching ? 'Fetching...' : 'Fetch Details'}}     
+            </button> 
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-light table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr> 
+                    <th>Id</th>
+                    <th>Title</th> 
+                    <th>Url</th>
+                    <th>thumbnailUrl</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let post of posts; let i=index" (click)="onClick1(post)"> 
+                    <td *ngIf="i<10">{{post.id}}</td>
+                    <td *ngIf="i<10">{{post.title}}</td> 
+                    <td *ngIf="i<10"><img [src] = "post.url" alt="" width="100px" height="70px" /> </td>
+                    <td *ngIf="i<10"><img [src] = "post.thumbnailUrl" alt="" width="100px" height="70px" /> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

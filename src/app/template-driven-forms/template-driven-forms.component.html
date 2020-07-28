@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12 row">
+      <div class="col-md-6"> 
+        <div class="card"> 
+          <div class="card-header">
+            <h5 class="text-primary">Registration Form</h5>
+          </div>
+          <div class="card-body"> 
+            <form #regForm="ngForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="lusername">Name</label>
+                <input required type="text" class="form-control" minlength="4" id="lusername" name="name" #name="ngModel" placeholder="Enter username" [(ngModel)]="reg.name">
+                <div [hidden]="name.valid || name.untouched" class="text-danger">
+                  <small> Name is required and length is atleast 4 character.</small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="lemail">Email Id</label>
+                <input required type="text" class="form-control" id="lemail" name="email" #email="ngModel" placeholder="Enter mail Id" [(ngModel)]="reg.email">
+                <div [hidden]="email.valid || email.untouched" class="text-danger">
+                    <small>Email Id is required.</small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="lmobile">Mobile Number</label>
+                <input type="tel" class="form-control" id="lmobile" minlength="10" maxlength="10" name="mobile" #mobile="ngModel" placeholder="Enter mobile number"  [(ngModel)]="reg.mobile">
+                <div [hidden]="mobile.valid" class="text-danger">
+                    <small>Minimum length is 10 number.</small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="lpassword">Password</label>
+                <input type="password" class="form-control" id="lpassword" name="password" placeholder="Enter Password"  [(ngModel)]="reg.password" #password="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="lcpassword">Confirm Password</label>
+                <input type="password" class="form-control" id="lcpassword" name="cpassword" placeholder="Enter Confirm password"  [(ngModel)]="reg.cpassword" #cpassword="ngModel">
+                <div *ngIf="password.value != cpassword.value" class="text-danger">
+                    <small>Password not match.</small>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary w-25" [disabled]="!regForm.form.valid">Submit</button>
+            </form>
+          </div>
+            <!-- <div class="card-footer">
+              <p class="alert alert-warning">We'll never share your password with anyone else.</p>
+            </div> --> 
+        </div> 
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="text-success"> Log In Form </h5>
+          </div>
+          <div class="card-body">
+            <form #loginForm="ngForm">
+              <div class="form-group">
+                <label for="empname">Employee Name</label>
+                <input required type="text" minlength="3" maxlength="10" name="empname" class="form-control" id="empname" placeholder="Enter employee name" #empname="ngModel" [(ngModel)]="login.empname">
+                <div [hidden]="empname.valid || empname.untouched"> 
+                  <small class="text-danger">Please enter username and minimum 3 character length required</small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="emppass">Employee Password</label>
+                <input required type="password" name="emppass" id="emppass" class="form-control" placeholder="Emter employee password" #emppass="ngModel" [(ngModel)]="login.emppass">                 
+                <div [hidden]="emppass.valid || emppass.untouched">
+                  <small class="text-danger">Please enter password</small>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success w-25">Log In</button>
+            </form>
+          </div>
+        </div>  
+      </div>
+      <div class="card my-5 col-md-6">
+        <div class="card-body">
+          <h4 class="text-success" >Employee Details</h4><hr>
+          <form #userForm="ngForm" (ngSubmit)="onAddUser(userForm.value)" >
+            <div class="form-group">
+              <label for="name">Employee Name</label>
+              <input type="text" name="name" ngModel id="" required autocomplete="off" class="form-control">
+            </div>
+            <div class="form-goup">
+              <label for="technology">Technology</label>
+              <input type="text" name="tech" ngModel id="" required autocomplete="off" class="form-control">
+            </div><br>
+            <button type="submit" class="btn btn-success" >Submit</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <table class="table table-dark table-hover my-5 mx-2">
+          <thead>
+            <tr>
+              <th class="lead">Username</th>
+              <th class="lead">Technology</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{user.name}}</td>
+              <td>{{user.tech}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div> 
+  

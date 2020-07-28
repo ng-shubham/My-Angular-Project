@@ -1,0 +1,135 @@
+<div class="container">  
+    <div class="row justify-content-center">
+        <div class="col-md-5">       
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-success">AWS User Details</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="this.LoginService.awsForm" (ngSubmit)="onSubmit()">
+                        <input type="hidden" formControlName="$key">
+                        <div class="form-group">
+                            <label for="username">Customer Name</label>
+                            <input formControlName="username" autocomplete="off" type="text" id="username" class="form-control" 
+                                name="username" placeholder="Enter customer name" [ngClass]="{'is-invalid': submitted && formControls.username.errors}">
+                            <div *ngIf="submitted && formControls.username.errors" class="invalid-feedback">                       
+                                <div *ngIf="formControls.username.errors.required">Customer name is required.</div>
+                                <div *ngIf="formControls.username.errors.minlength">Customer name must be at least 4 characters.</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Customer Mobile Number</label>
+                            <input formControlName="mobile" autocomplete="off" type="text" name="mobile" class="form-control" placeholder="Enter mobile number" [ngClass]="{'is-invalid': submitted && formControls.mobile.errors}">
+                            <div *ngIf="submitted && formControls.mobile.errors" class="invalid-feedback">
+                                <div *ngIf="formControls.mobile.errors.required"> Mobile number is required.</div> 
+                                <div *ngIf="formControls.mobile.errors.pattern"> Wrong mobile number entered.</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Customer Email Id</label>
+                            <input formControlName="email" type="email" autocomplete="off" name="email" class="form-control" placeholder="Enter email id" [ngClass]="{'is-invalid': submitted && formControls.email.errors}">
+                            <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback">
+                                <div *ngIf="formControls.email.errors.required">Mail id required.</div>
+                                <div *ngIf="formControls.email.errors.email">Wrong email id entered.</div>
+                            </div>
+                        </div>
+                        <button type="submit" [disabled]="" class="btn btn-success w-25 text-center text-white">Submit</button>
+                    </form>
+                    <div class="alert alert-success mt-2" *ngIf="showSuccessMessage" >
+                        Data submitted successfully. 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7"> 
+            <table class="table table-bordered table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Mobile No.</th>
+                        <th>Email Id</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let user of userArray">
+                    <tr>
+                        <td>{{user.username}} </td>
+                        <td>{{user.mobile}} </td>
+                        <td>{{user.email}}</td>
+                        <td>
+                            <button class="btn btn-warning mx-1 w-100" (click)="LoginService.populateForm(user)" >Update</button> 
+                        </td>
+                        <td> 
+                            <button class="btn btn-danger mx-1 w-100" (click)="onDelete(user.$key)" >Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="alert alert-danger" *ngIf="showDeletedMessage">
+                Deleted successfully
+            </div>
+        </div>
+    </div>    
+    <hr>
+    <div class="row justify-content-center">                
+        <div class="col-md-6">
+            <div class="card mb-5">
+                <div class="card-header">
+                    <h5 class="text-primary">Customer Registration Form</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="custform" (ngSubmit)="onSubmitData()">
+                        <div class="form-group">
+                            <label for="custnmae">Customer Name</label>
+                            <input 
+                                formControlName="custname"
+                                autocomplete="off"
+                                placeholder="Enter customer name"
+                                type="text"
+                                name="custname"
+                                class="form-control"
+                                >
+                            <div *ngIf="!custform.get('custname').valid && custform.get('custname').touched" class="text-danger">
+                                <div><small *ngIf="fc.custname.errors.required">Customer name required. </small></div>
+                                <div><small *ngIf="fc.custname.errors.minlength">Customer must be at least 4 characters. </small></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="custmobile">Mobile number</label>
+                            <input 
+                                formControlName="custmobile"
+                                placeholder="Enter mobile number"
+                                autocomplete="off"
+                                type="number"
+                                name="custmobile"
+                                class="form-control">
+                            <div *ngIf="custform.get('custmobile').invalid && custform.get('custmobile').touched" class="text-danger">
+                                <div><small *ngIf="fc.custmobile.errors.required"> Mobile number required </small></div>
+                                <div><small *ngIf="fc.custmobile.errors.pattern"> Pattern not match </small></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="custemail">Email Id</label>
+                            <input 
+                                formControlName="custemail"
+                                placeholder="Enter mail id"
+                                autocomplete="off"
+                                type="email"
+                                name="custemail"
+                                class="form-control" >
+                            <div *ngIf="!custform.get('custemail').valid && custform.get('custemail').touched" class="text-danger">
+                                <div><small *ngIf="fc.custemail.errors.required"> Customer mail required</small></div>
+                                <div><small *ngIf="fc.custemail.errors.email"> Wrong mail id entered </small></div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-25" [disabled]="!custform.valid" >Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>        
+        <div class="col-md-6"> 
+
+        </div>
+    </div>
+</div>
